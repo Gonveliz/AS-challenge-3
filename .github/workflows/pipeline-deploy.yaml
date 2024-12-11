@@ -16,7 +16,10 @@ jobs:
 
       # Run unit tests with Jest
       - name: Run Unit Tests
-        run: npm test
+        run: |
+          ls
+          pwd
+          npm test
 
       # Generate Jest coverage report
       - name: Generate Test Coverage
