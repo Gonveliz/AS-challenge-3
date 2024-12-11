@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - env.rollback
       - .github/workflows/rollback.yaml
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,25 +15,21 @@ jobs:
       id-token: write
       contents: read
     steps:
-      # Checkout the repository
+    
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # Install dependencies
       - name: Install Dependencies
         run: npm install
 
-      # Run unit tests with Jest
       - name: Run Unit Tests
         run: npm test
 
-      # Generate Jest coverage report
       - name: Generate Test Coverage
         run: npm test -- --coverage
 
@@ -63,8 +59,7 @@ jobs:
         run: |
           aws eks update-kubeconfig --name challenge-eks --region $AWS_REGION
 
-      - name: Deploy EKS
+      - name: Deploy app in EKS
         run: |
-          echo Pushing the Docker image...
           kubectl apply -f k8s/app.yaml
           kubectl rollout restart deployment app-as-challenge-deployment -n app-as-challenge
