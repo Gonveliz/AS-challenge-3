@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Rollback
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - env.rollback
+      - .github/workflows/rollback.yaml
 
 jobs:
   build:
