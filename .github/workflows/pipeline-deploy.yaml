@@ -8,7 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write  # Permite obtener el token OIDC
+      contents: read  # Permite leer el repositorio (si es necesario)
     steps:
       # Checkout the repository
       - name: Checkout Code
@@ -35,7 +37,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::471112631123:role/OIDCStack-Role-4ZOjnedmQvXE
+          role-to-assume: arn:aws:iam::471112631123:role/OIDCStack-Role-41djYCG5woaN
           aws-region: us-east-1
 
       - name: Deploy to AWS
