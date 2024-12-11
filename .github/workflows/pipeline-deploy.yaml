@@ -77,4 +77,4 @@ jobs:
 
       # Deploy logic (example placeholder)
       - name: Deploy
-        run: echo "Deploying the application.."
+        run: echo "Deploying the application."
