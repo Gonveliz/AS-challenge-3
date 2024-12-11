@@ -14,17 +14,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Run unit tests with Jest
-      - name: Run Unit Tests
-        run: |
-          ls
-          pwd
-          npm test
-
-      # Generate Jest coverage report
-      - name: Generate Test Coverage
-        run: npm test -- --coverage
-
       # Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -35,9 +24,13 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # Run tests
-      - name: Run Tests
+      # Run unit tests with Jest
+      - name: Run Unit Tests
         run: npm test
+
+      # Generate Jest coverage report
+      - name: Generate Test Coverage
+        run: npm test -- --coverage
 
       # Build the project
       - name: Build Project
