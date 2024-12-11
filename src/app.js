@@ -4,8 +4,9 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes/routes');
-const app = express();
 const { connectDB } = require('./config/db');
+
+const app = express(); // Asegúrate de que `app` esté definido antes de usarlo
 
 // Connect Database
 if (process.env.NODE_ENV !== 'test') {
@@ -14,6 +15,11 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Ruta de prueba para la raíz
+app.get('/', (req, res) => {
+  res.status(200).send('App is running');
+});
 
 // for testing purposes
 app.get('/test', (req, res) => {
