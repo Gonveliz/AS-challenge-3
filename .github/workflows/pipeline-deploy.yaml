@@ -66,15 +66,12 @@ jobs:
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/app-as-challenge:${{ github.sha }}
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/app-as-challenge:latest
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
+      - name: Confing EKS
+        run: |
+          aws eks update-kubeconfig --name challenge-eks --region $AWS_REGION
 
-    steps:
-      # Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Deploy EKS
+        run: |
+          echo Pushing the Docker image...
+          kubectl apply -f k8s/app.yaml
 
-      # Deploy logic (example placeholder)
-      - name: Deploy
-        run: echo "Deploying the application."
