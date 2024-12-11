@@ -1,5 +1,11 @@
 require('dotenv').config();
 
+// Inicialización de Datadog tracer
+const tracer = require('dd-trace').init({
+  service: 'challenge-service', // Nombre descriptivo de tu servicio
+  env: 'dev'
+});
+
 // Express App Setup
 const express = require('express');
 const bodyParser = require('body-parser');
