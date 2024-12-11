@@ -6,6 +6,8 @@ on:
       - main
     paths-ignore:
       - env.rollback
+      - .github/workflows/rollback.yaml
+      
 jobs:
   build:
     runs-on: ubuntu-latest
