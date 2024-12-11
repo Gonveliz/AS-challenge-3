@@ -1,5 +1,5 @@
 FROM node:14-alpine
-ENV TO_DO_DB=""
+ENV TO_DO_DB="mongodb://dummy-uri"
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install 
