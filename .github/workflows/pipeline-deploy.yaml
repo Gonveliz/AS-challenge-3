@@ -32,9 +32,15 @@ jobs:
       - name: Generate Test Coverage
         run: npm test -- --coverage
 
-      # Build the project
-      - name: Build Project
-        run: npm run build
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::471112631123:role/OIDCStack-Role-4ZOjnedmQvXE
+          aws-region: us-east-1
+
+      - name: Deploy to AWS
+        run: |
+          aws s3 ls
 
   deploy:
     runs-on: ubuntu-latest
