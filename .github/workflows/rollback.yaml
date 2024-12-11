@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
+    paths:
       - env.rollback
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,24 +17,6 @@ jobs:
       # Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      # Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      # Install dependencies
-      - name: Install Dependencies
-        run: npm install
-
-      # Run unit tests with Jest
-      - name: Run Unit Tests
-        run: npm test
-
-      # Generate Jest coverage report
-      - name: Generate Test Coverage
-        run: npm test -- --coverage
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -46,16 +29,12 @@ jobs:
         run: |
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com
 
-      - name: Build Docker Image
-        run: |
-          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/app-as-challenge:${{ github.sha }} -f Dockerfile .
-          docker tag ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/app-as-challenge:${{ github.sha }} ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/app-as-challenge:latest
-
       - name: Push Docker Image
         run: |
-          echo Pushing the Docker image...
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/app-as-challenge:${{ github.sha }}
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/app-as-challenge:latest
+          set -a
+          source env.rollback
+          set +a
+          sed -i "s|\(image: .*:\)latest|\1$IMAGE_TAG|" k8s/app.yaml
 
       - name: Confing EKS
         run: |
