@@ -9,13 +9,13 @@ on:
       - .github/workflows/rollback.yaml
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
     steps:
-    
+
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -32,6 +32,13 @@ jobs:
 
       - name: Generate Test Coverage
         run: npm test -- --coverage
+
+  buildanddeploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
