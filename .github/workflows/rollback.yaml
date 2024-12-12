@@ -15,7 +15,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-    
+
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -45,4 +45,3 @@ jobs:
         run: |
           echo Pushing the Docker image...
           kubectl apply -f k8s/app.yaml
-          kubectl rollout restart deployment app-as-challenge-deployment -n app-as-challenge
