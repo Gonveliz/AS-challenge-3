@@ -43,7 +43,7 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -74,3 +74,4 @@ jobs:
         run: |
           kubectl apply -f k8s/app.yaml
           kubectl rollout restart deployment app-as-challenge-deployment -n app-as-challenge
+          
