@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 
 // Ruta de prueba para la raíz
 app.get('/', (req, res) => {
-  res.status(200).send('App funcionando. version:1.2.11');
+  res.status(200).send('App funcionando. version:1.2.3');
 });
 
 // for testing purposes
